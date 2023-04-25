@@ -1,5 +1,5 @@
 const arr1 = [{
-  name: 'Backquote', key: '§', shiftKeyEN: '±', keyRU: '&gt', shiftKeyRU: '&lt', group: 'basic',
+  name: 'Backquote', key: '§', shiftKeyEN: '±', keyRU: '>', shiftKeyRU: '<', group: 'basic',
 }, {
   name: 'Digit1', key: '1', shiftKeyEN: '!', keyRU: '1', shiftKeyRU: '!', group: 'basic',
 }, {
@@ -233,7 +233,13 @@ const caseDown = document.querySelectorAll('.caseDown');
 btnsBasic.forEach((element) => {
   element.addEventListener('click', (event) => {
     area.focus();
-    area.value += event.target.innerHTML;
+    if (event.target.innerHTML === '&gt;') {
+      area.value += '>';
+    } else if (event.target.innerHTML === '&lt;') {
+      area.value += '<';
+    } else {
+      area.value += event.target.innerHTML;
+    }
   });
 });
 // service btns in textarea by click
@@ -253,6 +259,7 @@ btnsService.forEach((element) => {
         item.classList.toggle('hidden');
       });
     } else if (event.target.innerHTML === '⇪ Caps') {
+      document.querySelector('.CapsLock').classList.toggle('hover');
       caseUp.forEach((item) => {
         item.classList.toggle('hidden');
       });
@@ -300,6 +307,12 @@ document.addEventListener('keydown', (event) => {
   } else if (event.code === 'Tab') {
     event.preventDefault();
     area.value += '    ';
+  } else if (event.code === 'Backquote' && caseUp[0].classList.contains('hidden') && localStorage.getItem('lang') === 'changed') {
+    event.preventDefault();
+    area.value += '>';
+  } else if (event.code === 'Backquote' && localStorage.getItem('lang') === 'changed') {
+    event.preventDefault();
+    area.value += '<';
   } else if (event.code === 'ControlLeft' || event.code === 'AltLeft' || event.code === 'MetaLeft' || event.code === 'MetaRight' || event.code === 'AltRight' || event.code === 'Enter' || event.code === 'Backspace') {
     area.value += '';
   } else if (localStorage.getItem('lang') === 'changed' && document.querySelector(`.${event.code} .rus .caseDown`).classList.contains('hidden')) {
