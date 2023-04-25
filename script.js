@@ -180,8 +180,9 @@ class Btn {
   }
 }
 function createHtml(arr, line) {
-  for (let i = 0; i < arr.length; i++) {
-    new Btn(arr[i].name, arr[i].key, arr[i].shiftKeyEN, arr[i].keyRU, arr[i].shiftKeyRU, arr[i].group).render(line);
+  for (let i = 0; i < arr.length; i += 1) {
+    const k = arr[i];
+    new Btn(k.name, k.key, k.shiftKeyEN, k.keyRU, k.shiftKeyRU, k.group).render(line);
   }
 }
 createHtml(arr1, 0);
@@ -223,7 +224,6 @@ if (localStorage.getItem('lang') === 'changed') {
 }
 
 const area = document.querySelector('#textarea');
-const btns = document.querySelectorAll('.key');
 const btnsService = document.querySelectorAll('.service');
 const btnsBasic = document.querySelectorAll('.basic');
 const caseUp = document.querySelectorAll('.caseUp');
@@ -240,35 +240,36 @@ btnsBasic.forEach((element) => {
 btnsService.forEach((element) => {
   element.addEventListener('mousedown', (event) => {
     area.focus();
-    console.log(event.target.innerHTML);
-    if (event.target.innerHTML == '⟵') {
+    if (event.target.innerHTML === '⟵') {
       const newInner = area.value.slice(0, -1);
       area.value = newInner;
-    } else if (event.target.innerHTML == 'Enter') {
+    } else if (event.target.innerHTML === 'Enter') {
       area.value += '\n';
-    } else if (event.target.innerHTML == '⇧' || event.target.innerHTML == '⇧ Shift') {
+    } else if (event.target.innerHTML === '⇧' || event.target.innerHTML === '⇧ Shift') {
       caseUp.forEach((item) => {
         item.classList.toggle('hidden');
       });
       caseDown.forEach((item) => {
         item.classList.toggle('hidden');
       });
-    } else if (event.target.innerHTML == '⇪ Caps') {
+    } else if (event.target.innerHTML === '⇪ Caps') {
       caseUp.forEach((item) => {
         item.classList.toggle('hidden');
       });
       caseDown.forEach((item) => {
         item.classList.toggle('hidden');
       });
-    } else if (event.target.innerHTML == '⇥ Tab') {
+    } else if (event.target.innerHTML === '⇥ Tab') {
       area.value += '    ';
+    } else if (event.target.innerHTML === '▲' || event.target.innerHTML === '◄' || event.target.innerHTML === '▼' || event.target.innerHTML === '►') {
+      area.value += event.target.innerHTML;
     }
   });
 });
 btnsService.forEach((element) => {
   element.addEventListener('mouseup', (event) => {
     area.focus();
-    if (event.target.innerHTML == '⇧' || event.target.innerHTML == '⇧ Shift') {
+    if (event.target.innerHTML === '⇧' || event.target.innerHTML === '⇧ Shift') {
       caseUp.forEach((item) => {
         item.classList.toggle('hidden');
       });
@@ -282,24 +283,25 @@ btnsService.forEach((element) => {
 // btns in textarea by key
 document.addEventListener('keydown', (event) => {
   area.focus();
-  if (event.code == 'ShiftLeft' || event.code == 'ShiftRight') {
+  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     caseUp.forEach((item) => {
       item.classList.toggle('hidden');
     });
     caseDown.forEach((item) => {
       item.classList.toggle('hidden');
     });
-  } else if (event.code == 'CapsLock') {
+  } else if (event.code === 'CapsLock') {
     caseUp.forEach((item) => {
       item.classList.toggle('hidden');
     });
     caseDown.forEach((item) => {
       item.classList.toggle('hidden');
     });
-  } else if (event.code == 'Tab') {
+  } else if (event.code === 'Tab') {
     event.preventDefault();
     area.value += '    ';
-  } else if (event.code == 'ControlLeft' || event.code == 'AltLeft' || event.code == 'MetaLeft' || event.code == 'MetaRight' || event.code == 'AltRight' || event.code == 'Enter' || event.code == 'Backspace') {
+  } else if (event.code === 'ControlLeft' || event.code === 'AltLeft' || event.code === 'MetaLeft' || event.code === 'MetaRight' || event.code === 'AltRight' || event.code === 'Enter' || event.code === 'Backspace') {
+    area.value += '';
   } else if (localStorage.getItem('lang') === 'changed' && document.querySelector(`.${event.code} .rus .caseDown`).classList.contains('hidden')) {
     event.preventDefault();
     area.value += document.querySelector(`.${event.code} .rus .caseUp`).innerHTML;
@@ -316,7 +318,7 @@ document.addEventListener('keydown', (event) => {
 });
 // caps
 document.addEventListener('keyup', (event) => {
-  if (event.code == 'CapsLock') {
+  if (event.code === 'CapsLock') {
     caseUp.forEach((item) => {
       item.classList.toggle('hidden');
     });
@@ -324,7 +326,7 @@ document.addEventListener('keyup', (event) => {
       item.classList.toggle('hidden');
     });
   }
-  if (event.code == 'ShiftLeft' || event.code == 'ShiftRight') {
+  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     caseUp.forEach((item) => {
       item.classList.toggle('hidden');
     });
