@@ -181,8 +181,10 @@ class Btn {
 }
 function createHtml(arr, line) {
   for (let i = 0; i < arr.length; i += 1) {
-    const k = arr[i];
-    new Btn(k.name, k.key, k.shiftKeyEN, k.keyRU, k.shiftKeyRU, k.group).render(line);
+    const {
+      name, key, shiftKeyEN, keyRU, shiftKeyRU, group,
+    } = arr[i];
+    new Btn(name, key, shiftKeyEN, keyRU, shiftKeyRU, group).render(line);
   }
 }
 createHtml(arr1, 0);
