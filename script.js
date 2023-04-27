@@ -135,18 +135,18 @@ const arr5 = [{
 }];
 
 const mainDiv = document.createElement('div');
-mainDiv.className = 'centralizer';
+mainDiv.className = 'main';
 mainDiv.innerHTML = `<p class="title">RSS Виртуальная клавиатура</p>
-      <textarea class="body--textarea textarea" id="textarea" rows="5" cols="50"></textarea>
-      <div class="body--keyboard keyboard" id="keyboard">
-      <div class="keyboard--row 1 row"></div>
-      <div class="keyboard--row 2 row"></div>
-      <div class="keyboard--row third row"></div>
-      <div class="keyboard--row four row"></div>
-      <div class="keyboard--row five row"></div>
+      <textarea class="textarea" id="textarea" rows="5" cols="50"></textarea>
+      <div class="keyboard">
+      <div class="line first"></div>
+      <div class="line second"></div>
+      <div class="line third"></div>
+      <div class="line four"></div>
+      <div class="line five"></div>
       </div>
-        <p class="description">Клавиатура создана в операционной системе macOS</p>
-        <p class="language">Для переключения языка: fn</p>`;
+        <p class="os">Клавиатура создана в операционной системе macOS</p>
+        <p class="lang">Для переключения языка: fn</p>`;
 
 document.body.append(mainDiv);
 
@@ -161,20 +161,16 @@ class Btn {
   }
 
   render(line) {
-    const keyboardRow = document.querySelectorAll('.keyboard--row');
-    keyboardRow[line].innerHTML += `
-    <div class="keyboard--key key ${this.name} ${this.group}">
+    const keyboardLine = document.querySelectorAll('.line');
+    keyboardLine[line].innerHTML += `
+    <div class="key ${this.name} ${this.group}">
       <span class="rus hidden">
         <span class="caseDown hidden">${this.keyRU}</span>
         <span class="caseUp hidden">${this.shiftKeyRU}</span>
-        <span class="caps hidden">${this.shiftKeyRU}</span>
-        <span class="shiftCaps hidden">${this.keyRU}</span>
       </span>
       <span class="eng">
         <span class="caseDown">${this.key}</span>
         <span class="caseUp hidden">${this.shiftKeyEN}</span>
-        <span class="caps hidden">${this.shiftKeyEN}</span>
-        <span class="shiftCaps hidden">${this.key}</span>
       </span>
     </div>`;
   }
@@ -239,6 +235,8 @@ btnsBasic.forEach((element) => {
       area.value += '>';
     } else if (event.target.innerHTML === '&lt;') {
       area.value += '<';
+    } else if (event.target.innerHTML === '&amp;') {
+      area.value += '&';
     } else {
       area.value += event.target.innerHTML;
     }
@@ -309,6 +307,9 @@ document.addEventListener('keydown', (event) => {
   } else if (event.code === 'Tab') {
     event.preventDefault();
     area.value += '    ';
+  } else if (event.code === 'Digit7' && !caseUp[0].classList.contains('hidden') && localStorage.getItem('lang') !== 'changed') {
+    event.preventDefault();
+    area.value += '&';
   } else if (event.code === 'Backquote' && caseUp[0].classList.contains('hidden') && localStorage.getItem('lang') === 'changed') {
     event.preventDefault();
     area.value += '>';
