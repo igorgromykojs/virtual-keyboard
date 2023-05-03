@@ -260,12 +260,12 @@ btnsService.forEach((element) => {
       });
     } else if (event.target.innerHTML === '⇪ Caps') {
       document.querySelector('.CapsLock').classList.toggle('hover');
-      caseUp.forEach((item) => {
-        item.classList.toggle('hidden');
-      });
-      caseDown.forEach((item) => {
-        item.classList.toggle('hidden');
-      });
+      for (let i = 28; i < caseUp.length; i += 1) {
+        caseUp[i].classList.toggle('hidden');
+      }
+      for (let i = 28; i < caseDown.length; i += 1) {
+        caseDown[i].classList.toggle('hidden');
+      }
     } else if (event.target.innerHTML === '⇥ Tab') {
       area.value += '    ';
     } else if (event.target.innerHTML === '▲' || event.target.innerHTML === '◄' || event.target.innerHTML === '▼' || event.target.innerHTML === '►') {
@@ -298,12 +298,12 @@ document.addEventListener('keydown', (event) => {
       item.classList.toggle('hidden');
     });
   } else if (event.code === 'CapsLock') {
-    caseUp.forEach((item) => {
-      item.classList.toggle('hidden');
-    });
-    caseDown.forEach((item) => {
-      item.classList.toggle('hidden');
-    });
+    for (let i = 25; i < caseUp.length; i += 1) {
+      caseUp[i].classList.toggle('hidden');
+    }
+    for (let i = 25; i < caseDown.length; i += 1) {
+      caseDown[i].classList.toggle('hidden');
+    }
   } else if (event.code === 'Tab') {
     event.preventDefault();
     area.value += '    ';
@@ -335,12 +335,12 @@ document.addEventListener('keydown', (event) => {
 // caps
 document.addEventListener('keyup', (event) => {
   if (event.code === 'CapsLock') {
-    caseUp.forEach((item) => {
-      item.classList.toggle('hidden');
-    });
-    caseDown.forEach((item) => {
-      item.classList.toggle('hidden');
-    });
+    for (let i = 25; i < caseUp.length; i += 1) {
+      caseUp[i].classList.toggle('hidden');
+    }
+    for (let i = 25; i < caseDown.length; i += 1) {
+      caseDown[i].classList.toggle('hidden');
+    }
   }
   if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     caseUp.forEach((item) => {
